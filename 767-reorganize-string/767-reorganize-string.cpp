@@ -13,8 +13,6 @@ public:
         
         int oddRemaining = ceil(s.size() / 2.0);
         
-        cout << mostFrequentChar << " " << maxCount << " " << oddRemaining << endl;
-        
         if (maxCount > oddRemaining)
             return "";
         
