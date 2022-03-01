@@ -1,15 +1,21 @@
 class Solution {
 public:
     int findDuplicate(vector<int>& nums) {
-        memset(storage, 0, static_cast<int>(10e5) + 1);
-        for (int i = 0; i < nums.size(); ++i) {
-            if (storage[nums[i]] > 0)
-                return nums[i];
-            storage[nums[i]] = 1;
+        int fastPtr = nums[0];
+        int slowPtr = nums[0];
+        // find intersection
+        do {
+            slowPtr = nums[slowPtr];
+            fastPtr = nums[fastPtr];
+            fastPtr = nums[fastPtr];
+        } while (slowPtr != fastPtr);
+        cout << "found intersection at ptr " << fastPtr << endl;
+        int slowStart = nums[0];
+        int slowIntersect = slowPtr;
+        while(slowStart != slowIntersect) {
+            slowStart = nums[slowStart];
+            slowIntersect = nums[slowIntersect];
         }
-        return -1;
+        return slowIntersect;
     }
-    
-private:
-    int storage[static_cast<int>(10e5) + 1] = {0};
 };
