@@ -8,33 +8,21 @@ public:
     }
     
     vector<int> productExceptSelf(vector<int>& nums) {
-        vector<int> prefix = nums;
-        vector<int> postfix = nums;
+        vector<int> output(nums.size(), 0);
         // calculate prefix
-        for (int i = 1; i < prefix.size(); ++i) {
-            prefix[i] *= prefix[i - 1];
-        }
-        
-        // calculate postfix
-        
-        for (int i = nums.size() - 2; i >= 0; --i) {
-            postfix[i] *= postfix[i + 1];
-        }
-        
-        printVec(prefix);
-        
-        printVec(postfix);
-        
-        // calculate output
+        int prefix = 1;
         for (int i = 0; i < nums.size(); ++i) {
-            int preval = (i == 0) ? 1 : prefix[i - 1];
-            int postval = (i == nums.size() - 1) ? 1 : postfix[i + 1];
-            nums[i] = preval * postval;
+            output[i] = prefix;
+            prefix *= nums[i];
         }
-        return nums;
+        // calculate postfix
+        int postfix = 1;
+        for (int i = nums.size() - 1; i >= 0; --i) {
+            output[i] *= postfix;
+            postfix *= nums[i];
+        }
+        return output;
         
     }
-    
-    //1,1,1,3,8,6 -> 24,
     
 };
