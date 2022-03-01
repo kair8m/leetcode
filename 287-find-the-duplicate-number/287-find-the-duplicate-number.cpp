@@ -1,5 +1,6 @@
 class Solution {
 public:
+    // wtf ???
     int findDuplicate(vector<int>& nums) {
         int fastPtr = nums[0];
         int slowPtr = nums[0];
