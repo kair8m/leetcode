@@ -24,14 +24,5 @@ public:
         }
         return nullptr;
     }
-
-    void lowestCommonAncestor(TreeNode* node, TreeNode* p, TreeNode* q, TreeNode* lca) {
-        if (!node)
-            return;
-        if (node->val < lca->val)
-            lca = node;
-        lowestCommonAncestor(node->left, p, q, lca);
-        lowestCommonAncestor(node->right, p, q, lca);
-    }
     
 };
