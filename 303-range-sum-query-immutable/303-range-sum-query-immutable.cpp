@@ -1,23 +1,20 @@
 class NumArray {
 public:
-    NumArray(vector<int>& nums) : m_nums(nums) {
-        
+    NumArray(vector<int>& nums) {
+        int n = nums.size();
+        dp = vector(n + 1, 0);
+        dp[0] = 0;
+        for (int i = 1; i <= n; ++i) {
+            dp[i] = dp[i - 1] + nums[i - 1];
+        }
     }
     
     int sumRange(int left, int right) {
-        if (left > right)
-            return -1;
-        if (left >= m_nums.size())
-            return -1;
-        int sum = m_nums[left];
-        for (int i = left + 1; i <= right; ++i) {
-            sum += m_nums[i];
-        }
-        return sum;
+        return dp[right + 1] - dp[left];
     }
     
 private:
-    vector<int> m_nums;
+    vector<int> dp;
 };
 
 /**
