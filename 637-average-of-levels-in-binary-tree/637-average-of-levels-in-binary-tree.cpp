@@ -12,26 +12,24 @@
 class Solution {
 public:
     vector<double> averageOfLevels(TreeNode* root) {
-        vector<int> count;
-        vector<double> res;
-        average(root, 0, res, count);
-        for (int i = 0; i < res.size(); ++i) {
-            res[i] = res[i] / double(count[i]);
+        unordered_map<int, int64_t> counts, sums;
+        dfs(root, 0, counts, sums);
+        vector<double> output(counts.size(), 0.0);
+        for (const auto& entry : counts) {
+            int level = entry.first;
+            int count = entry.second;
+            double result = double(sums[level]) / double(count);
+            output[level] = result;
         }
-        return res;
+        return output;
     }
     
-    void average(TreeNode* node, int level, vector<double>& res, vector<int>& count) {
+    void dfs(TreeNode* node, int level, unordered_map<int, int64_t>& counts, unordered_map<int, int64_t>& sums) {
         if (!node)
             return;
-        if (level >= res.size()) {
-            res.push_back(node->val);
-            count.push_back(1);
-        } else {
-            res[level] += node->val;
-            count[level]++;
-        }
-        average(node->left, level + 1, res, count);
-        average(node->right, level + 1, res, count);
+        counts[level]++;
+        sums[level] += node->val;
+        dfs(node->left, level + 1, counts, sums);
+        dfs(node->right, level + 1, counts, sums);
     }
 };
