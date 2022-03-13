@@ -11,14 +11,16 @@
 class Solution {
 public:
     ListNode* middleNode(ListNode* head) {
-        unordered_map<int, ListNode*> nodes;
         auto curr = head;
         int len = 0;
         while (curr) {
-            nodes[len++] = curr;
             curr = curr->next;
+            len++;
         }
         int middle = len / 2;
-        return nodes[middle];
+        curr = head;
+        while (middle-- > 0) 
+            curr = curr->next;
+        return curr;
     }
 };
