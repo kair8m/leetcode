@@ -1,8 +1,6 @@
 class Solution {
 public:
     int peakIndexInMountainArray(vector<int>& arr) {
-        if (arr.size() == 3)
-            return arr[1];
         int left = 0;
         int right = arr.size() - 1;
         while (left < right) {
