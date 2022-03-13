@@ -11,20 +11,29 @@
 class Solution {
 public:
     bool isPalindrome(ListNode* head) {
-        auto curr = head;
-        unordered_map<int, ListNode*> nodes;
-        int len = 0;
-        while(curr) {
-            nodes[len++] = curr;
-            curr = curr->next;
+        auto fastPtr = head;
+        auto slowPtr = head;
+        // find middle (slowPtr)
+        while (fastPtr && fastPtr->next) {
+            slowPtr = slowPtr->next;
+            fastPtr = fastPtr->next->next;
         }
-        int left = 0;
-        int right = len - 1;
-        while (left < right) {
-            if (nodes[left]->val != nodes[right]->val)
+        // reverse second half
+        ListNode* prev = nullptr;
+        while (slowPtr) {
+            auto node = slowPtr->next;
+            slowPtr->next = prev;
+            prev = slowPtr;
+            slowPtr = node;
+        }
+        // check palidrome
+        auto left = head;
+        auto right = prev;
+        while (right) {
+            if (left->val != right->val)
                 return false;
-            left++;
-            right--;
+            left = left->next;
+            right = right->next;
         }
         return true;
     }
