@@ -23,7 +23,7 @@ public:
             curr = list2;
             list2 = list2->next;
         }
-        auto newList = new ListNode(curr->val);
+        auto newList = curr;
         newList->next = mergeTwoLists(list1, list2);
         return newList;
     }
