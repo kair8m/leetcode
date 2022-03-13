@@ -1,26 +1,43 @@
 class Solution {
 public:
     bool backspaceCompare(string s, string t) {
-        string a, b;
+        int sPtr = s.size() - 1;
+        int tPtr = t.size() - 1;
         
-        for (char c : s) {
-            if (c == '#') {
-                if (!a.empty())
-                    a.pop_back();
-                continue;
+        int sSkips = 0;
+        int tSkips = 0;
+        
+        while (sPtr >= 0 || tPtr >= 0) {
+            while (sPtr >= 0) {
+                if (s[sPtr] == '#') {
+                    sSkips++;
+                    sPtr--;
+                } else if (sSkips > 0) {
+                    sPtr--;
+                    sSkips--;
+                } else {
+                    break;
+                }
             }
-            a += c;
-        }
-        
-        for (char c : t) {
-            if (c == '#') {
-                if (!b.empty())
-                    b.pop_back();
-                continue;
+            
+            while (tPtr >= 0) {
+                if (t[tPtr] == '#') {
+                    tSkips++;
+                    tPtr--;
+                } else if (tSkips > 0) {
+                    tPtr--;
+                    tSkips--;
+                } else {
+                    break;
+                }
             }
-            b += c;
+            if (sPtr >= 0 && tPtr >= 0 && s[sPtr] != t[tPtr])
+                return false;
+            if ((sPtr >= 0) != (tPtr >= 0))
+                return false;
+            sPtr--;
+            tPtr--;
         }
-        
-        return a == b;
+        return true;
     }
 };
